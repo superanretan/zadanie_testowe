@@ -16,7 +16,7 @@ namespace AFSInterview
         private Enemy targetEnemy;
 
         private IReadOnlyList<Enemy> enemies;
-
+        private Vector3 enemyPredictPos; //outside for gizmos check
         public void Initialize(IReadOnlyList<Enemy> enemies)
         {
             this.enemies = enemies;
@@ -60,12 +60,11 @@ namespace AFSInterview
         }
 
 
-        private Vector3 enemyPredictPos;
+  
 
         private IEnumerator EnemyShootIe(Transform enemy)
         {
             var enemyLastPos = Vector3.zero;
-            enemyPredictPos = Vector3.zero;
             var enemyVelocity = Vector3.zero;
             if (enemy != null)
             {
@@ -74,7 +73,7 @@ namespace AFSInterview
                 enemyVelocity = (enemy.position - enemyLastPos) / 0.001f;
 
                 enemyPredictPos =
-                    enemyVelocity * 0.15f + (enemy.position); //(0.3f*shootFireRate*enemyVelocity +enemyDir);
+                    enemyVelocity * 0.15f + (enemy.position);
 
                 CalcShootForceAndShootBall(enemyPredictPos, initialVelocity);
             }
