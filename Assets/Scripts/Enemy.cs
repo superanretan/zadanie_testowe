@@ -35,7 +35,7 @@
         private void Update()
         {
             var direction = (target - transform.position).normalized;
-
+            
             transform.position += direction * speed * Time.deltaTime;
             if ((transform.position - target).magnitude <= 0.1f)
                 SetTarget();
@@ -48,7 +48,6 @@
                 transform.position.y,
                 Random.Range(transform.position.z - 5, transform.position.z + 5)
             );
-
             target.x = Mathf.Clamp(target.x, boundsMin.x, boundsMax.x);
             target.z = Mathf.Clamp(target.z, boundsMin.y, boundsMax.y);
         }

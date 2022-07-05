@@ -152,13 +152,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 7577324009426626682, guid: 530182aaaf989f444833d42faa8b16b7,
     type: 3}
-  towerPrefab: {fileID: 8481531145051783542, guid: 25d0f396843308e46a1c35b076505faf,
-    type: 3}
   boundsMin: {x: -12, y: -8}
   boundsMax: {x: 12, y: 13}
   enemySpawnRate: 1
-  enemiesCountText: {fileID: 1950592537}
-  scoreText: {fileID: 1448683482}
+  towerSpawnLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  enemiesCountText: {fileID: 0}
+  scoreText: {fileID: 0}
+  towersList:
+  - towerType: 0
+    towerPrefab: {fileID: 8481531145051783542, guid: 25d0f396843308e46a1c35b076505faf,
+      type: 3}
+  - towerType: 1
+    towerPrefab: {fileID: 780443430775747750, guid: 0f21f23cacae88a4baa84153c58ca403,
+      type: 3}
 --- !u!4 &536068723
 Transform:
   m_ObjectHideFlags: 0
@@ -623,7 +631,7 @@ GameObject:
   - component: {fileID: 1823526739}
   m_Layer: 8
   m_Name: Ground
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

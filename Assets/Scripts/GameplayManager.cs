@@ -1,4 +1,6 @@
-﻿namespace AFSInterview
+﻿using System;
+
+namespace AFSInterview
 {
     using System.Collections.Generic;
     using TMPro;
@@ -30,7 +32,8 @@
         [Header("UI")] [SerializeField] private TextMeshProUGUI enemiesCountText;
         [SerializeField] private TextMeshProUGUI scoreText;
 
-        [SerializeField] private List<Towers> towersList = new List<Towers>();
+        [Header("Towers List")] [SerializeField]
+        private List<Towers> towersList = new List<Towers>();
 
         private List<Enemy> enemies;
         private float enemySpawnTimer;
@@ -39,6 +42,12 @@
         private void Awake()
         {
             enemies = new List<Enemy>();
+        }
+
+        private void Start()
+        {
+            SetEnemyCounter();
+            SetScoreCounter();
         }
 
         private void Update()
@@ -50,12 +59,15 @@
                 SpawnEnemy();
                 enemySpawnTimer = enemySpawnRate;
             }
+        }
 
+        private void LateUpdate()
+        {
             if (Input.GetMouseButtonDown(0))
             {
                 if (Camera.main == null) return;
                 var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                
+
                 if (Physics.Raycast(ray, out var hit, towerSpawnLayer))
                 {
                     var spawnPosition = hit.point;
@@ -86,14 +98,16 @@
             enemy.Initialize(boundsMin, boundsMax);
 
             enemies.Add(enemy);
+            SetEnemyCounter();
         }
 
 
         private void Enemy_OnEnemyDied(Enemy enemy)
         {
             enemies.Remove(enemy);
-            score++;
-            SetCounters();
+            AddScore();
+            SetEnemyCounter();
+            SetScoreCounter();
         }
 
         private void SpawnTower(Vector3 position, TowersType towerType)
@@ -108,14 +122,23 @@
                     tower.GetComponent<SimpleTower>().Initialize(enemies);
                     break;
                 case TowersType.towerBurst:
-                    tower.GetComponent<NewTower>().Initialize(enemies);
+                    tower.GetComponent<BurstTower>().Initialize(enemies);
                     break;
             }
         }
 
-        private void SetCounters()
+        private void AddScore()
+        {
+            score++;
+        }
+
+        private void SetScoreCounter()
         {
             scoreText.text = "Score: " + score;
+        }
+
+        private void SetEnemyCounter()
+        {
             enemiesCountText.text = "Enemies: " + enemies.Count;
         }
     }
